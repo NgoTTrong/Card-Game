@@ -1,0 +1,184 @@
+@font-face {
+    font-family: "Creepy";
+    src: url("fonts/Creepy.woff") format("woff"),url("fonts/Creepy.woff2") format("woff2")
+
+}
+@font-face {
+    font-family: "Lunacy";
+    src: url("fonts/Lunacy.woff") format("woff"),url("fonts/Lunacy.woff2") format("woff2")
+}
+
+*{
+    box-sizing: border-box;
+}
+html{
+    min-height:100vh;
+    cursor: url("cursor/Ghost.cur"),auto;
+}
+body{
+    margin: 0;
+    background: radial-gradient(#9D5900, #3D2200);
+}
+.pape_title{
+    font-family: Creepy,serif;
+    color:#ff6D00 ;
+    text-align: center;
+    font-weight: normal;
+    font-size: 6em;
+}
+.game_info{
+    color: #ffbb89;
+    font-family: Lunacy,serif;
+    font-size: 4em;
+}
+.game_container{
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-gap: 10px;
+    margin: 50px;
+    justify-content: center;
+    perspective: 500px;
+}
+.game_info_container{
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: space-between;
+}
+.card{
+    position: relative;
+    height: 175px;
+    width: 125px;
+}
+.card:hover {
+    cursor: url("cursor/GhostHover.cur"), auto;
+}
+.card_face{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    transition: transform 500ms ease-in-out;
+}
+.card.visible .card_back{
+    transform: rotateY(-180deg);
+}
+.card.visible  .card_front{
+    transform: rotateY(0deg);
+}
+.card.matched .card_value{
+    animation: dance 1s linear infinite 50ms;
+}
+@keyframes dance{
+    0%,100%{
+        transform: rotate(0);
+    }
+    25%{
+        transform: rotate(-30deg);
+    }
+    75%{
+        transform: rotate(30deg);
+    }
+}
+.card_back{
+    background-color: black;
+    border-color: #ff6D00;
+}
+.card_front{
+    transform: rotateY(180deg);
+    background-color: #ffbb89;
+    border-color: #333;
+}
+.card_value{
+    transition: transform 100ms ease-in-out;
+    transform: scale(0.9);
+}
+.card_front:hover .card_value{
+    transform: scale(1); 
+}
+.cob_web{
+    position: absolute;
+    width: 47px;
+    height: 47px;
+    transition: width 100ms ease-in-out,height 100ms ease-in-out;
+}
+.card_back:hover .cob_web{
+    width: 52px;
+    height: 52px;
+}
+.cob_web_top_left{
+    transform: rotate(270deg);
+    top:0;
+    left:0;
+}
+.cob_web_top_right{
+    top:0;
+    right:0;
+}
+.cob_web_bottom_left{
+    transform: rotate(180deg);
+    bottom:0;
+    left:0;
+}
+.cob_web_bottom_right{
+    transform: rotate(90deg);
+    bottom:0;
+    right:0;
+}
+.spider{
+    align-self: flex-start;
+    transform: translateY(-10px);
+    transition: transform 100ms ease-in-out;
+}
+.card_back:hover .spider{
+    transform: translateY(0);
+}
+
+
+.overlay_text{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    color:#FF6D00;
+    font-family: Creepy,serif;
+}
+.overlay_text.visible{
+    display: flex;
+    animation: overlay_grow 500ms forwards;
+    flex-direction: column;
+}
+@keyframes overlay_grow{
+    from{
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+    }
+    to{
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 10em;
+    }
+}
+
+.overlay_text_small{
+    font-size: 0.3em;
+}
+@media(max-width:600px){
+    .game_container{
+        grid-template-columns: repeat(2,auto);
+    }
+    .game_info_container{
+        flex-direction: column;
+        align-items: center;
+    }
+}
